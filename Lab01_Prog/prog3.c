@@ -1,4 +1,9 @@
+// Write a C program to extract each byte from a given number and store them in separate character
+// variables and print the content of those variables
+
 #include <stdio.h>
+
+
 
 int main()
 {

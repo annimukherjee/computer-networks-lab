@@ -1,3 +1,18 @@
+// Write a C program to populate the following structure which will keep 16 bytes of data. Extract 2
+// bytes of data(using another structure pkt1) from the below struct at a single point of time and print
+// the same. Continue the same till the end of data in the structure.
+
+// struct pkt{
+// char ch[8];
+//     int num1;
+//     int num2;
+// };
+
+// struct pkt1{
+//     char ch1;
+//     char ch2;
+// };
+
 #include <stdio.h>
 
 struct pkt

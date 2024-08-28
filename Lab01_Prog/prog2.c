@@ -1,4 +1,8 @@
-// Write a C program to assign values to each members of the following structure. Pass the populated structure to a function Using call-by-value and another function using call-by-address and print the value of each member of the structure.
+// Write a C program to assign values to each members of the following structure. Pass the populated structure to a 
+// function Using call-by-value and another function using call-by-address and print the value of each member of 
+// the structure.
+
+
 // struct student_info{
 //     int roll_no;
 //     char name[50];
@@ -57,7 +61,10 @@ int main()
     printf("Enter CGPA: ");
     scanf("%f", &s1.CGPA);
 
-    printf("Enter dob: \n");
+    // fflush(stdin);
+
+    printf("Enter dob-----------------\n");
+
 
     printf("Enter day: ");
     scanf("%d", &s1.age.day); // check s1.day
@@ -68,7 +75,11 @@ int main()
     printf("Enter year: ");
     scanf("%d", &s1.age.year);
 
+
+    printf("Printing by passing the value: \n");
     valuePrint(s1);
+
+    printf("Printing by passing the reference: \n");
     refPrint(&s1);
 
     return 0;
