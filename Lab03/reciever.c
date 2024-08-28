@@ -9,9 +9,10 @@
 
 int main()
 {
+
+
     int flag = 1;
     int ret = socket(AF_INET, SOCK_DGRAM, 0);
-    
     if (ret == -1)
     {
         printf("Socket creation failed");
@@ -23,11 +24,11 @@ int main()
     }
 
 
+
     struct sockaddr_in sent;
     sent.sin_family = AF_INET;
     sent.sin_port = 5500;
     sent.sin_addr.s_addr = INADDR_ANY;
-    
     int ret1 = bind(ret, (const struct sockaddr *)&sent, sizeof(sent));
     if (ret1 == -1)
     {
@@ -38,9 +39,12 @@ int main()
         printf("Bind successfully\n");
     }
 
+
     
     while (flag)
     {
+
+
         // recieve message
         char recv_buff[100];
         struct sockaddr_in recv;
@@ -50,7 +54,6 @@ int main()
         {
             printf("Recieved failed");
         }
-        
         else
         {
             if (recv_buff[0] == 'e' && recv_buff[1] == 'x' && recv_buff[2] == 'i' && recv_buff[3] == 't')
@@ -60,18 +63,18 @@ int main()
             printf("%s\n", recv_buff);
         }
 
+
+
         // send message
         char send_buff[100];
         printf("Please enter the message to send:");
         scanf("%[^\n]%*c", send_buff);
-        
         
         struct sockaddr_in send;
         send.sin_family = AF_INET;
         send.sin_port = recv.sin_port;
         send.sin_addr.s_addr = INADDR_ANY;
         int size2 = sizeof(send);
-
 
         int res2 = sendto(ret, send_buff, strlen(send_buff), 0, (const struct sockaddr *)(&send), size);
         if (res2 == -1)
@@ -86,5 +89,6 @@ int main()
                 exit(0);
             }
         }
+        
     }
 }

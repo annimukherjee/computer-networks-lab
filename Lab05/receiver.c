@@ -42,7 +42,7 @@ int main() {
 	// -----------------------------------------------------------------------------------------------------------
 	// creating a bind (need to do this in sever side as usually the port remains constant for the server!)
 
-	// need to populate a struct of name sockaddr_in which is pre-defined as:
+	// need to populate a struct of name sockaddr_in which is pre-defined as: (can find this in `man 7 ip`)
 	// struct sockaddr_in {
     //            sa_family_t    sin_family; /* address family: AF_INET */
     //            in_port_t      sin_port;   /* port in network byte order */
@@ -56,30 +56,33 @@ int main() {
 	send.sin_port = htons(7000);     // host byte order to network byte order
 	//send.sin_addr.s_addr = inet_addr("10.2.248.220");
 
-
+	// It converts the Internet host address in "dotted-decimal" notation 
+	// (like "127.0.0.1") into a 32-bit packed binary format 
+	// that is used in a sockaddr_in structure.
 	inet_aton("127.0.0.1", &send.sin_addr);
 
+	
 	socklen_t size_of_send_struct = sizeof(send);
 	
 	int server_bind_fd = bind(sock_server_connection_fd,     
 							(const struct sockaddr *)&send, // expects a pointer of type `const struct sockaddr *` of the struct!
 							size_of_send_struct
 							);
-	
 
-
-	if(server_bind_fd == -1) {
+	if (server_bind_fd == -1)
+	{
 		printf("Bind creation failed\n");
 		exit(1);
-	} else {
-		printf("Bind created successfully\n");
-
 	}
+	else
+		printf("Bind created successfully\n");
 	printf("\n");
 
+
 	// -----------------------------------------------------------------------------------------
-	// calling listenapi, waiting for the connection request
-	int listen_fd = listen(sock_server_connection_fd, 5);
+	// calling listenapi, waiting for the connection request from sender...
+	int listen_fd = listen(sock_server_connection_fd, 
+							5);
 	// -------------------------------------------------------------
 
 
@@ -95,15 +98,6 @@ int main() {
 							);
 	
 	// ---------------------------------------------------------------------------------------
-
-
-
-
-
-	
-
-	
-
 
 
 
@@ -123,24 +117,22 @@ int main() {
 
 										// (struct sockaddr *)(&recv), 
 										// (&size)
-										
-	
-	
-	if(NumberOfBytesReceived == -1) {
+
+	if (NumberOfBytesReceived == -1)
+	{
 		printf("API recv failed\n");
 		exit(1);
-	} else if(NumberOfBytesReceived > 0){
+	}
+	else if (NumberOfBytesReceived > 0)
+	{
 		recv_buff[NumberOfBytesReceived] = '\0';
 		printf("Received msg: %s\n", recv_buff);
 		// printf("Port number of sender = %d\n", ntohs(accept_conn1.sin_port));
 		// printf("IP Address of sender = %s\n", inet_ntoa(accept_conn1.sin_addr));
-		
-		if(strcasecmp(recv_buff, "bye") == 0) {
+
+		if (strcasecmp(recv_buff, "bye") == 0)
 			exit(1);
-		}
 	}
-
-
 
 		// //sending
 		// char send_buff[100];

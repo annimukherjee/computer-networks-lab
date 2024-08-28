@@ -1,27 +1,30 @@
+// UNSURE WHAT THIS IS. NOT SURE WHY I WROTE THIS CODE.
+
+
 #include<stdio.h>
 #include<stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 
 
-/* Internet address. */
-struct in_addr {
-	uint32_t s_addr;     /* address in network byte order */
-};
+// /* Internet address. */
+// struct in_addr {
+// 	uint32_t s_addr;     /* address in network byte order */
+// };
 
 
-struct sockaddr_in {
-    sa_family_t sin_family; /* address family: AF_INET */
-   	in_port_t sin_port;   /* port in network byte order */
-	struct in_addr sin_addr;   /* internet address */
-};
+// struct sockaddr_in {
+//     sa_family_t sin_family; /* address family: AF_INET */
+//    	in_port_t sin_port;   /* port in network byte order */
+// 	struct in_addr sin_addr;   /* internet address */
+// };
 
 
 
 
 int main()
 {
-	struct sockadd_in sent;
+	struct sockaddr_in sent;
 	sent.sin_family = AF_INET;
 	sent.sin_addr.s_addr  = IPADDR_ANY;
 	

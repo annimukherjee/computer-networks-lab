@@ -9,8 +9,9 @@
 int main()
 {
     int flag = 1;   
-    int ret = socket(AF_INET, SOCK_DGRAM, 0);
-    
+    int ret = socket(AF_INET, 
+                    SOCK_DGRAM, 
+                    0);
     if (ret == -1)
     {
         printf("Socket creation failed");
@@ -21,12 +22,15 @@ int main()
         printf("Socket creation successfully\n");
     }
 
+
+
     struct sockaddr_in sent;
     sent.sin_family = AF_INET;
     sent.sin_port = 6000;
     sent.sin_addr.s_addr = INADDR_ANY;
     int ret1 = bind(ret, 
-    (const struct sockaddr *)&sent, sizeof(sent));
+                    (const struct sockaddr *)&sent, 
+                    sizeof(sent));
     
     if (ret1 == -1)
     {
@@ -49,16 +53,25 @@ int main()
         send.sin_port = 5500;
         send.sin_addr.s_addr = INADDR_ANY;
         int size = sizeof(send);
-        int res = sendto(ret, send_buff, strlen(send_buff), 0, (const struct sockaddr *)(&send), size);
+
+        int res = sendto(ret, 
+                        send_buff, 
+                        strlen(send_buff), 
+                        0, 
+                        (const struct sockaddr *)(&send), 
+                        size);
+
         if (res == -1)
             printf("Send failed");
         
         else
         {
             printf("Successful\n");
+            
             if (send_buff[0] == 'e' && send_buff[1] == 'x' && send_buff[2] == 'i' && send_buff[3] == 't')
                 exit(0);
         }
+
 
         // recieve message
         char recv_buff[100];
@@ -67,7 +80,13 @@ int main()
 
 
         // recvfrom(file_descriptor, buffer, length_buffer, flag, stucture, )
-        int res2 = recvfrom(ret, recv_buff, sizeof(recv_buff), 0, (struct sockaddr *)(&recv), (socklen_t *)(&size2));
+        int res2 = recvfrom(ret, 
+                            recv_buff, 
+                            sizeof(recv_buff), 
+                            0, 
+                            (struct sockaddr *)(&recv), 
+                            (socklen_t *)(&size2));
+
         if (res2 == -1)
         {
             printf("Recieved failed");
@@ -75,9 +94,9 @@ int main()
         else
         {
             if (recv_buff[0] == 'e' && recv_buff[1] == 'x' && recv_buff[2] == 'i' && recv_buff[3] == 't')
-            {
                 exit(0);
-            }
+            
+
             printf("\n%s\n", recv_buff);
         }
     }

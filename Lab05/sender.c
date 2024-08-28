@@ -21,12 +21,13 @@ int main() {
 	int client_sock_fd = socket(AF_INET, 
 								SOCK_STREAM, 
 								0);
-	if(client_sock_fd == -1) {
+	if (client_sock_fd == -1)
+	{
 		printf("Socket creation failed\n");
 		exit(1);
-	} else {
-		printf("Socket created successfully\n");
 	}
+	else
+		printf("Socket created successfully\n");
 
 	// ---------------------------------------------------------
 	
@@ -86,14 +87,15 @@ int main() {
 								//  (const struct sockaddr *)&se, 
 								// sizeof(se)
 
-
-	if(NumberOfBytesSend == -1) {
+	if (NumberOfBytesSend == -1)
+	{
 		printf("Error\n");
 		exit(1);
-	} else {
-		if(strcasecmp(send_buff, "bye") == 0) {
+	}
+	else
+	{
+		if (strcasecmp(send_buff, "bye") == 0)
 			exit(1);
-		}
 	}
 		// //receiving
 		// char recv_buff[100];

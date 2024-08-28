@@ -24,9 +24,13 @@
 int main()
 {
 	// AF_INET is the macro for internet protocol
-	// SOCK_DGRAM is the macro for the protocol used to pass the packet
+
+	// SOCK_DGRAM is the macro for the protocol used to pass the packet. Can be either SOCK_DGRAM or SOCK_STREAM....
+
 	// 0 automatically assigns the UDP which is in the Transport layer.
-		
+
+
+	// ------ creating the socket file descriptor -------------------- 
 	int sock_fd = socket(AF_INET, SOCK_DGRAM, 0);	
 	if(sock_fd == -1)
 	{
@@ -38,6 +42,11 @@ int main()
 		printf("Socket has been created successfully\n");
 		printf("The socket's file descriptor is: %d\n", sock_fd);
 	}
+	// socket created --------------------------------------------------
+
+
+
+	// creating a bind (to name the socket) ---------------------------------
 
 	struct sockaddr_in s;
 	s.sin_family = AF_INET;
@@ -45,8 +54,9 @@ int main()
 	s.sin_addr.s_addr  = INADDR_ANY;
 	
 	
-	
-	int name_bind = bind(sock_fd, (const struct sockaddr *)&s, sizeof(s));
+	int name_bind = bind(sock_fd, 
+						(const struct sockaddr *)&s, 
+						sizeof(s));
 
 	if(name_bind==-1)
 	{
@@ -57,6 +67,8 @@ int main()
 		printf("The bind was succesful.\n");
 		printf("Return value: %d\n", name_bind);
 	}
+	
+	// done with bind ---------------------------------
 	
 		
 		
