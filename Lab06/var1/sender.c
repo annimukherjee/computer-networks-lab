@@ -65,38 +65,38 @@ int main() {
 	while(1) {
 		
 	//sending
-	char send_buff[100];
+	// char send_buff[100];
 
-	printf("\nEnter the msg to send : \n");
-	fgets(send_buff, sizeof(send_buff), stdin);
-	printf("\n");
-	size_t len = strlen(send_buff);
-	send_buff[len-1] = '\0';
+	// printf("\nEnter the msg to send : \n");
+	// fgets(send_buff, sizeof(send_buff), stdin);
+	// printf("\n");
+	// size_t len = strlen(send_buff);
+	// send_buff[len-1] = '\0';
 	
 	
-	// struct sockaddr_in se;
-	// se.sin_family = AF_INET;
-	// se.sin_port = htons(5000);
-	// inet_aton("127.0.0.1", &se.sin_addr);
+	// // struct sockaddr_in se;
+	// // se.sin_family = AF_INET;
+	// // se.sin_port = htons(5000);
+	// // inet_aton("127.0.0.1", &se.sin_addr);
 
-	ssize_t NumberOfBytesSend = send(client_sock_fd, 
-									send_buff, 
-									strlen(send_buff), 
-									0);
+	// ssize_t NumberOfBytesSend = send(client_sock_fd, 
+	// 								send_buff, 
+	// 								strlen(send_buff), 
+	// 								0);
 
-								//  (const struct sockaddr *)&se, 
-								// sizeof(se)
+	// 							//  (const struct sockaddr *)&se, 
+	// 							// sizeof(se)
 
-	if (NumberOfBytesSend == -1)
-	{
-		printf("Error\n");
-		exit(1);
-	}
-	else
-	{
-		if (strcasecmp(send_buff, "bye") == 0)
-			exit(1);
-	}
+	// if (NumberOfBytesSend == -1)
+	// {
+	// 	printf("Error\n");
+	// 	exit(1);
+	// }
+	// else
+	// {
+	// 	if (strcasecmp(send_buff, "bye") == 0)
+	// 		exit(1);
+	// }
 		//receiving
 
 		// char recv_buff[100];

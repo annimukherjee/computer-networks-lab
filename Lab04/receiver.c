@@ -43,7 +43,9 @@ int main()
 
 
 	while(1) {
-		//receiving
+
+
+	// #region receiving
 		char recv_buff[100];
 
 		struct sockaddr_in recv;
@@ -71,6 +73,8 @@ int main()
 				exit(1);
 			}
 		}
+
+	// #endregion
 
 
 		//sending
