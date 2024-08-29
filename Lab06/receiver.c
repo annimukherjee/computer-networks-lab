@@ -121,9 +121,8 @@ int main() {
 		{
 
 			connecn_fd[i] = accept(sock_server_connection_fd, 
-								(struct sockaddr *)&accept_conn1, 
-								&sizee
-								);
+						(struct sockaddr *)&accept_conn1, 
+						&sizee);
 
 			//receiving
 			char recv_buff[100];
@@ -132,9 +131,9 @@ int main() {
 
 
 			ssize_t NumberOfBytesReceived = recv(connecn_fd[i], 
-												recv_buff, 
-												sizeof(recv_buff), 
-												0);
+								recv_buff, 
+								sizeof(recv_buff), 
+								0);
 
 
 												// (struct sockaddr *)(&recv), 
@@ -172,9 +171,9 @@ int main() {
 
 
 			ssize_t NumberOfBytesSend = send(connecn_fd[i], 
-											send_buff, 
-											strlen(send_buff), 
-											0);
+							send_buff, 
+							strlen(send_buff), 
+							0);
 
 			if(NumberOfBytesSend == -1) {
 				printf("Error\n");
