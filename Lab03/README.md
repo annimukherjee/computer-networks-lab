@@ -18,7 +18,8 @@ First import the necessay header files:
 
 
 
-Then we have to create the socket. This can be acheived with the code snippet below.
+Then we create the socket. This can be acheived with the code snippet below.
+
 The socket function can be found on Linux man pages by typing `man socket`.
 
 
