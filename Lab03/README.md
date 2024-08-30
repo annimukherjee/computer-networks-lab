@@ -3,7 +3,7 @@
 
 
 
-## recviver.c
+## receiver.c
 
 
 First import the necessay header files:
