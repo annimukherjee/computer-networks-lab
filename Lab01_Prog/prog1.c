@@ -1,11 +1,14 @@
 // Write a C program to swap the content of 2 variables entered through the command line 
 // using function and pointer.
 
+
 #include <stdio.h>
 #include <stdlib.h>
 
+
 void valueSwap(int a, int b);
 void refSwap(int *a, int *b);
+
 
 int main(int argc, char *argv[])
 {
@@ -15,7 +18,9 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	int num1 = atoi(argv[1]);
+
+	// convert the string into an integer by using the ascii value.
+	int num1 = atoi(argv[1]); 
 	int num2 = atoi(argv[2]);
 
 	printf("Num1 before swap: %d\n", num1);
@@ -33,6 +38,10 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
+
+
+
+// Functions ----------------------------------
 
 void valueSwap(int a, int b)
 {
