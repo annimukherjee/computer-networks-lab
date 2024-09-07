@@ -50,54 +50,52 @@ int main() {
 
 	struct sockaddr_in send_struct;
 	send_struct.sin_family = AF_INET;
-	send_struct.sin_port = htons(7000);
+	send_struct.sin_port = htons(5000);
 	
 	inet_aton("127.0.0.1", &send_struct.sin_addr);
 
 	// ---------------------------------------------------------
 
-	int connect_fd = connect(client_sock_fd, 
-							(const struct sockaddr *)&send_struct,
-                   			sizeof(send_struct));
-
-
+	int connect_fd = connect(client_sock_fd,
+							 (const struct sockaddr *)&send_struct,
+							 sizeof(send_struct));
 
 	while(1) {
 		
 	//sending
-		char send_buff[100];
+	// char send_buff[100];
 
-		printf("\nEnter the msg to send : \n");
-		fgets(send_buff, sizeof(send_buff), stdin);
-		printf("\n");
-		size_t len = strlen(send_buff);
-		send_buff[len-1] = '\0';
+	// printf("\nEnter the msg to send : \n");
+	// fgets(send_buff, sizeof(send_buff), stdin);
+	// printf("\n");
+	// size_t len = strlen(send_buff);
+	// send_buff[len-1] = '\0';
 	
 	
-	// struct sockaddr_in se;
-	// se.sin_family = AF_INET;
-	// se.sin_port = htons(5000);
-		// inet_aton("127.0.0.1", &se.sin_addr);
+	// // struct sockaddr_in se;
+	// // se.sin_family = AF_INET;
+	// // se.sin_port = htons(5000);
+	// // inet_aton("127.0.0.1", &se.sin_addr);
 
-		ssize_t NumberOfBytesSend = send(client_sock_fd, 
-										send_buff, 
-										strlen(send_buff), 
-										0);
+	// ssize_t NumberOfBytesSend = send(client_sock_fd, 
+	// 								send_buff, 
+	// 								strlen(send_buff), 
+	// 								0);
 
-									//  (const struct sockaddr *)&se, 
-									// sizeof(se)
+	// 							//  (const struct sockaddr *)&se, 
+	// 							// sizeof(se)
 
-		if (NumberOfBytesSend == -1)
-		{
-			printf("Error\n");
-			exit(1);
-		}
-		else
-		{
-			if (strcasecmp(send_buff, "bye") == 0)
-				exit(1);
-		}
-			//receiving
+	// if (NumberOfBytesSend == -1)
+	// {
+	// 	printf("Error\n");
+	// 	exit(1);
+	// }
+	// else
+	// {
+	// 	if (strcasecmp(send_buff, "bye") == 0)
+	// 		exit(1);
+	// }
+		//receiving
 
 		// char recv_buff[100];
 		// struct sockaddr_in recv;
@@ -129,15 +127,13 @@ int main() {
 		// 					&sizee
 		// 					);
 
+		ssize_t NumberOfBytesReceived = recv(client_sock_fd,
+											 recv_buff,
+											 sizeof(recv_buff),
+											 0);
 
-		ssize_t NumberOfBytesReceived = recv(client_sock_fd, 
-											recv_buff, 
-											sizeof(recv_buff), 
-											0);
-
-
-											// (struct sockaddr *)(&recv), 
-											// (&size)
+		// (struct sockaddr *)(&recv),
+		// (&size)
 
 		if (NumberOfBytesReceived == -1)
 		{
@@ -154,8 +150,5 @@ int main() {
 			if (strcasecmp(recv_buff, "bye") == 0)
 				exit(1);
 		}
-
-
-
 	}
 }
