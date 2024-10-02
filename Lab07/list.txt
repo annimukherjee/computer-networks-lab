@@ -1,0 +1,9 @@
+client
+client.c
+file.txt
+list.txt
+randomfile.txt
+README.md
+res.txt
+serv
+server.c
