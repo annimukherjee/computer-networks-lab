@@ -1,24 +1,19 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 #include<netinet/in.h>
 #include<netinet/ip.h> 
-
 
 #include<string.h>
 #include<strings.h>
 
-
 #include<arpa/inet.h>
-
 
 #include<sys/types.h>          
 #include<sys/socket.h>
 
 #include<stdio.h>
 #include<stdlib.h>
-
 
 #include<netinet/in.h>
 #include<netinet/ip.h> 
@@ -32,26 +27,48 @@
 #include <sys/types.h>          /* See NOTES */
 #include <sys/socket.h>
 
+
 int main() {
 
-
-	// Creating a socket ---------------------------------------
 	int sock_server_connection_fd = socket(AF_INET, 
 											SOCK_STREAM, 
 											0);
 
-	if(sock_server_connection_fd == -1) {
-		printf("Socket creation failed\n");
-		exit(1);
-	} else {
-		printf("Socket created successfully\n");
+    if (sock_server_connection_fd == -1)
+    {
+        printf("Socket creation failed\n");
+        exit(1);
+    }
+    else
+    {
+        printf("Socket created successfully\n");
+    }
+    
+
+
+	// 
+	char command[100] = "ls > file.txt";
+
+	int result = system(command);
+
+	if (result == -1)
+	{
+		// system() failed to execute the command processor
+		printf("Cannot run the command\n");
 	}
-	// ------------ socket created ----------------------------
-
-	
-
-
-
+	else
+	{
+		// Check the status of the command
+		int status = WEXITSTATUS(result);
+		if (WIFEXITED(result) && status == 0)
+		{
+			printf("Command executed successfully\n");
+		}
+		else
+		{
+			printf("Command failed with status: %d\n", status);
+		}
+	}
 
 	// -----------------------------------------------------------------------------------------------------------
 	// creating a bind (need to do this in sever side as usually the port remains constant for the server!)
@@ -67,7 +84,8 @@ int main() {
 
 	struct sockaddr_in send_msg;
 	send_msg.sin_family = AF_INET;
-	send_msg.sin_port = htons(7000);     // host byte order to network byte order
+	send_msg.sin_port = htons(5000);     // host byte order to network byte order
+
 	//send.sin_addr.s_addr = inet_addr("10.2.248.220");
 
 	// It converts the Internet host address in "dotted-decimal" notation 
@@ -75,7 +93,6 @@ int main() {
 	// that is used in a sockaddr_in structure.
 	inet_aton("127.0.0.1", &send_msg.sin_addr);
 
-	
 	socklen_t size_of_send_struct = sizeof(send_msg);
 	
 	int server_bind_fd = bind(sock_server_connection_fd,     
@@ -83,17 +100,19 @@ int main() {
 							size_of_send_struct
 							);
 
+	
+
 	if (server_bind_fd == -1)
-	{
-		printf("Bind creation failed\n");
-		exit(1);
-	}
-	else
-		printf("Bind created successfully\n");
-	printf("\n");
+    {
+        printf("Bind creation failed\n");
+        exit(1);
+    }
+    else
+        printf("Bind created successfully\n");
+	
+    printf("\n");
 
-
-	// -----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
 	// calling listenapi, waiting for the connection request from sender...
 	int listen_fd = listen(sock_server_connection_fd, 
 							5);
@@ -111,10 +130,8 @@ int main() {
 	while(1) {
 
 
-		struct sockaddr_in accept_conn1;    // this will be populated by the OS!
-
+		struct sockaddr_in accept_conn1;        // this will be populated by the OS!
 		socklen_t sizee = sizeof(accept_conn1);
-
 		int connecn_fd[5];
 
 		// for (int i = 0; i < 5; i++)
@@ -156,24 +173,19 @@ int main() {
 		// 			exit(1);
 		// 	}
 
-		for (int i = 0; i < 2; i++)
-		{
-		connecn_fd[i] = accept(sock_server_connection_fd, 
-							(struct sockaddr *)&accept_conn1, 
-							&sizee
-							);
-		}
-		
+        for (int i = 0; i < 1; i++)
+        {
+            connecn_fd[i] = accept(sock_server_connection_fd,
+                                   (struct sockaddr *)&accept_conn1,
+                                   &sizee);
+        }
 
-		for (int i = 0; i < 2; i++)
-		{
-			
-		
-		
-		// //NEW SENDING CODE!!!!!!!!!!!!!!
-		printf("Who do u want to send msg to?\nClient0\t[Enter 0] or Client1\t[Enter 1]?\n");
-		int choice;
-		scanf("%d", &choice);
+        // //NEW SENDING CODE!!!!!!!!!!!!!!
+
+		// printf("Who do u want to send msg to?\nClient0\t[Enter 0] or Client1\t[Enter 1]?\n");
+		// int choice;
+		// scanf("%d", &choice);
+
 		char buff;
 		scanf("%c", &buff);
 
@@ -186,31 +198,12 @@ int main() {
 		
 		send_buff[len-1] = '\0';
 
-
-
-
-
-
-		ssize_t NumberOfBytesSend = send(connecn_fd[choice], 
-										send_buff, 
-										strlen(send_buff), 
-										0);
-
-		if(NumberOfBytesSend == -1) {
-			printf("Error\n");
-			exit(1);
-		} else {
-			if(strcasecmp(send_buff, "bye") == 0) {
-				exit(1);
-			}
-		}
-		}
-	
-
+		
 		
 
 
 
-	}
 
-}
+
+		ssize_t NumberOfBytesSend = send(connecn_fd[0], 
+										send_b

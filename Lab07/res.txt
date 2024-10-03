@@ -1,9 +1,10 @@
 client
 client.c
-file.txt
+client_new.c
 list.txt
 randomfile.txt
 README.md
 res.txt
 serv
 server.c
+server_new.c

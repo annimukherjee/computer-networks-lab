@@ -28,7 +28,7 @@ int main() {
 
     }
 
-    printf("Socket created %d\n", ret);
+    printf("Socket created %d\nOK\n", ret);
 
  
 
@@ -50,7 +50,7 @@ int main() {
 
     }
 
-    printf("Connected to server\n");
+    printf("Connected to server\nOK\n");
 
    
 
@@ -76,7 +76,7 @@ int main() {
 
         file_list[r] = '\0';
 
-        printf("Files in server directory:\n%s\n", file_list);
+        printf("Files in server directory:\n=========\n%s\n===========\n", file_list);
 
         fwrite(file_list, sizeof(char), strlen(file_list), fp);
 
@@ -108,7 +108,7 @@ int main() {
 
  
 
-        FILE *fp2 = fopen("file.txt", "w");
+        FILE *fp2 = fopen("file1.txt", "w");
 
         if (!fp2) {
 
@@ -124,7 +124,7 @@ int main() {
 
         char file_content[1000];
 
-        printf("\nContents of the file '%s':\n", requested_file);
+        printf("\nContents of the file '%s':\n---------------------------------------------\n", requested_file);
 
         while ((r = recv(ret, file_content, sizeof(file_content) - 1, 0)) > 0) {
 
@@ -148,7 +148,7 @@ int main() {
 
         fclose(fp2);
 
-        printf("\nFile transfer complete\n");
+        printf("\n---------------------\nFile transfer complete\n");
 
 //    }
 

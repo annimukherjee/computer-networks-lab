@@ -88,7 +88,7 @@ int main() {
 
         if (fp == NULL) {
 
-            char error_msg[] = "Could not open res.txt\n";
+            char error_msg[] = "Could not open files_in_dir.txt\n";
 
             send(csock, error_msg, sizeof(error_msg), 0);
 
