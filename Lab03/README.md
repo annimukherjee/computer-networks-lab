@@ -48,7 +48,7 @@ After we create the socket, we have to do a "binding" step.
 This step assigns a "name" to the socket if you will.
 
 We have to populate the `struct sockaddr_in` structure / data-type.
-Details about the `struct sockaddr_in` struct can be found in `man 7 ip`.
+Details about the `struct sockaddr_in` struct can be found with the `man 7 ip` command. (I'm using Ubuntu 22.04.2 LTS)
 
 
 In the code below, `ret` is the socket file descriptor.
@@ -84,7 +84,7 @@ int main()
 Now here begins our infinite while loop through which communication happens between the sender and the receiver.
 
 
-As we are in `receiver.c` (this can also be thought of as the `server` so `server.c` woudl have been an appropiate name as well.)
+As we are in `receiver.c` (this can also be thought of as the `server` so `server.c` would have been an appropiate name as well.)
 
 We define another `struct sockaddr_in` instance as `recv`. Note that we do not need to manually fill the members of this instance as this is done automatically by the OS.
 
@@ -182,7 +182,7 @@ int main()
 
 
 
-> And that's a wrap. That's more or less how the above programme works. Will update this README with an explanation of the `sender.c` code as well as and when I get time!
+> And that's a wrap. That's more or less how the above programe works. Will update this README with an explanation of the `sender.c` code as well as and when I get time!
 
 Thank you.
 
