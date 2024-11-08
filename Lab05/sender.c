@@ -1,18 +1,17 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 #include<netinet/in.h>
 #include<netinet/ip.h> 
-
-
-#include<string.h>
-#include<strings.h>
-
 #include<arpa/inet.h>
 
 #include <sys/types.h>          /* See NOTES */
 #include <sys/socket.h>
+
+#include<string.h>
+#include<strings.h>
+
+
 
 
 int main() {
@@ -21,6 +20,7 @@ int main() {
 	int client_sock_fd = socket(AF_INET, 
 								SOCK_STREAM, 
 								0);
+								
 	if (client_sock_fd == -1)
 	{
 		printf("Socket creation failed\n");
