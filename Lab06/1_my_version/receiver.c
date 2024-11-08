@@ -40,10 +40,13 @@ int main() {
 											SOCK_STREAM, 
 											0);
 
-	if(sock_server_connection_fd == -1) {
+	if (sock_server_connection_fd == -1)
+	{
 		printf("Socket creation failed\n");
 		exit(1);
-	} else {
+	}
+	else
+	{
 		printf("Socket created successfully\n");
 	}
 	// ------------ socket created ----------------------------
@@ -67,7 +70,8 @@ int main() {
 
 	struct sockaddr_in send_msg;
 	send_msg.sin_family = AF_INET;
-	send_msg.sin_port = htons(7000);     // host byte order to network byte order
+	send_msg.sin_port = htons(7000);     // host byte order to 
+	// network byte order
 	//send.sin_addr.s_addr = inet_addr("10.2.248.220");
 
 	// It converts the Internet host address in "dotted-decimal" notation 
@@ -158,10 +162,10 @@ int main() {
 
 		for (int i = 0; i < 2; i++)
 		{
-		connecn_fd[i] = accept(sock_server_connection_fd, 
-							(struct sockaddr *)&accept_conn1, 
-							&sizee
-							);
+			connecn_fd[i] = accept(sock_server_connection_fd, 
+								(struct sockaddr *)&accept_conn1, 
+								&sizee
+								);
 		}
 		
 
@@ -170,40 +174,35 @@ int main() {
 			
 		
 		
-		// //NEW SENDING CODE!!!!!!!!!!!!!!
-		printf("Who do u want to send msg to?\nClient0\t[Enter 0] or Client1\t[Enter 1]?\n");
-		int choice;
-		scanf("%d", &choice);
-		char buff;
-		scanf("%c", &buff);
+			// //NEW SENDING CODE!!!!!!!!!!!!!!
+			printf("Who do u want to send msg to?\nClient0\t[Enter 0] or Client1\t[Enter 1]?\n");
+			int choice;
+			scanf("%d", &choice);
+			char buff;
+			scanf("%c", &buff);
 
-		char send_buff[100];
-		printf("\nEnter the msg to send : \n");
-		fgets(send_buff, sizeof(send_buff), stdin);
-		printf("\n");
+			char send_buff[100];
+			printf("\nEnter the msg to send : \n");
+			fgets(send_buff, sizeof(send_buff), stdin);
+			printf("\n");
 
-		size_t len = strlen(send_buff);
-		
-		send_buff[len-1] = '\0';
+			size_t len = strlen(send_buff);
+			
+			send_buff[len-1] = '\0';
 
+			ssize_t NumberOfBytesSend = send(connecn_fd[choice], 
+											send_buff, 
+											strlen(send_buff), 
+											0);
 
-
-
-
-
-		ssize_t NumberOfBytesSend = send(connecn_fd[choice], 
-										send_buff, 
-										strlen(send_buff), 
-										0);
-
-		if(NumberOfBytesSend == -1) {
-			printf("Error\n");
-			exit(1);
-		} else {
-			if(strcasecmp(send_buff, "bye") == 0) {
+			if(NumberOfBytesSend == -1) {
+				printf("Error\n");
 				exit(1);
+			} else {
+				if(strcasecmp(send_buff, "bye") == 0) {
+					exit(1);
+				}
 			}
-		}
 		}
 	
 
