@@ -62,7 +62,10 @@ int main()
             int client_index = client_count;
             client_count++;
             char recv_buff[100];
+            
+            
             pid = fork();
+            
             if (pid == 0)
             { // Child process
                 close(server_socket); // 

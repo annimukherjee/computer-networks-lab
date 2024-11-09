@@ -49,7 +49,9 @@ int main()
         char recv_buff[100];
         struct sockaddr_in recv;
         int size = sizeof(recv);
+
         int res = recvfrom(ret, recv_buff, sizeof(recv_buff), 0, (struct sockaddr *)(&recv), (socklen_t *)(&size));
+
         if (res == -1)
         {
             printf("Recieved failed");
@@ -74,9 +76,10 @@ int main()
         send.sin_family = AF_INET;
         send.sin_port = recv.sin_port;
         send.sin_addr.s_addr = INADDR_ANY;
+
         int size2 = sizeof(send);
 
-        int res2 = sendto(ret, send_buff, strlen(send_buff), 0, (const struct sockaddr *)(&send), size);
+        int res2 = sendto(ret, send_buff, strlen(send_buff), 0, (const struct sockaddr *)(&send), size2);
         if (res2 == -1)
         {
             printf("Send failed");

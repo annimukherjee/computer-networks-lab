@@ -48,6 +48,7 @@ int main()
         char send_buff[100];
         printf("Please enter the message to send:");
         scanf("%[^\n]%*c", send_buff);
+        
         struct sockaddr_in send;
         send.sin_family = AF_INET;
         send.sin_port = 5500;
@@ -63,7 +64,6 @@ int main()
 
         if (res == -1)
             printf("Send failed");
-        
         else
         {
             printf("Successful\n");

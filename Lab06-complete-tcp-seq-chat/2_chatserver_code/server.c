@@ -25,8 +25,8 @@ int main()
         printf("Socket Created successfully\n");
     }
 
-    struct sockaddr_in server_addr, client_addr;
-    int c_size = sizeof(client_addr);
+    struct sockaddr_in server_addr;
+    
 
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(5000);
@@ -58,6 +58,9 @@ int main()
     int client_fds[MAX_CLIENTS];
     int client_count = 0;
     int client_no;
+
+    struct sockaddr_in client_addr;
+    int c_size = sizeof(client_addr);
 
     while (client_count < MAX_CLIENTS)
     {

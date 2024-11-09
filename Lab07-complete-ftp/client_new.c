@@ -1,15 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <sys/socket.h>
 
 #include <netinet/in.h>
-
 #include <netinet/ip.h>
 
 #include <string.h>
-
-#include <stdlib.h>
-
 #include <arpa/inet.h>
 
 #include <unistd.h>
@@ -21,13 +18,9 @@ int main() {
     int ret = socket(AF_INET, SOCK_STREAM, 0);
 
     if (ret == -1) {
-
         printf("Socket not created\n");
-
         return 1;
-
     }
-
     printf("Socket created %d\nOK\n", ret);
 
  
@@ -35,19 +28,14 @@ int main() {
     struct sockaddr_in server;
 
     server.sin_family = AF_INET;
-
     server.sin_port = htons(5000);
-
     server.sin_addr.s_addr = INADDR_ANY;
 
+    
     int connection = connect(ret, (const struct sockaddr*)&server, sizeof(server));
-
     if (connection != 0) {
-
         printf("Connection unsuccessful\n");
-
         return -1;
-
     }
 
     printf("Connected to server\nOK\n");
@@ -57,37 +45,28 @@ int main() {
     FILE *fp = fopen("list.txt", "w");
 
     if (!fp) {
-
         printf("Error opening list.txt for writing\n");
-
         close(ret);
-
         return -1;
-
     }
 
  
 
     char file_list[1000];
-
     int r = recv(ret, file_list, sizeof(file_list) - 1, 0);
 
     if (r > 0) {
 
         file_list[r] = '\0';
-
         printf("Files in server directory:\n=========\n%s\n===========\n", file_list);
-
         fwrite(file_list, sizeof(char), strlen(file_list), fp);
-
-    } else {
+    } 
+    else 
+    {
 
         printf("Error receiving file list\n");
-
         close(ret);
-
         fclose(fp);
-
         return -1;
 
     }
@@ -113,9 +92,7 @@ int main() {
         if (!fp2) {
 
             printf("Error opening file.txt for writing\n");
-
             close(ret);
-
             return -1;
 
         }
@@ -130,20 +107,12 @@ int main() {
 
             file_content[r] = '\0';
 
- 
-
             if (strstr(file_content, "EOF")) {
-
                 break; 
-
             }
 
- 
-
             printf("%s", file_content); 
-
             fwrite(file_content, sizeof(char), r, fp2);
-
         }
 
         fclose(fp2);
