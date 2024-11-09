@@ -16,6 +16,8 @@
 
 int main() {
 
+
+    // socket -----------------------------------------------------
     int ret = socket(AF_INET, SOCK_STREAM, 0);
     if (ret == -1) {
         printf("Socket not created\n");
@@ -23,6 +25,12 @@ int main() {
     }
 
     printf("Socket created %d\n", ret);
+    // ------------------------------------------------------------
+
+
+
+
+    // server BIND -----------------------------------------------------------------------------
 
     struct sockaddr_in server_info;
     server_info.sin_family = AF_INET;
@@ -30,25 +38,31 @@ int main() {
     server_info.sin_addr.s_addr = INADDR_ANY;
     int ret1 = bind(ret, (const struct sockaddr*)&server_info, sizeof(server_info));
     
+
+
     if (ret1 == -1) {
         printf("Bind not successful\n");
         return 1;
     }
     printf("Bind successful %d\n", ret1);
 
- 
+    // -----------------------------------------------------------------------------------------
 
+
+    // server LISTEN -----------------------------------------------------------------------------
 
     int lis = listen(ret, 5);
     if (lis == -1) {
         printf("Listen not successful\n");
         return 1;
     }
-
     printf("Listening...\n");
+    // -----------------------------------------------------------------------------------------
+
 
     while (1) {
 
+        // accept tcp ---------------------------------------------------------------------
         struct sockaddr_in client;
         socklen_t client_len = sizeof(client);
         int csock = accept(ret, (struct sockaddr*)&client, &client_len);
@@ -58,9 +72,14 @@ int main() {
         }
 
         printf("Client connected\n");
+        // ---------------------------------------------------------------------------------
 
+
+        // 
         system("ls > res.txt");
 
+
+        // send file list to client begins ---------------------------------------
         FILE *fp = fopen("res.txt", "r");
 
         if (fp == NULL) {
@@ -72,17 +91,17 @@ int main() {
 
 
         char buffer[1000];
-        
         int byter;
-
         while ((byter = fread(buffer, sizeof(char), sizeof(buffer), fp)) > 0) {
             send(csock, buffer, byter, 0);
         }
-
         fclose(fp);
-
         printf("File list sent to client\n");
 
+        // ----- send file list to client ends --------------------------------
+        
+
+        // get the name of the the client wants to download -------------------------
         char reqfile[100];
         int r = recv(csock, reqfile, sizeof(reqfile), 0);
 
@@ -95,6 +114,11 @@ int main() {
         reqfile[r] = '\0';
 
         printf("Client requested file: %s\n", reqfile);
+
+        // ------------- end --------------------------- -------------------------
+
+
+        // open said file and send it ------------------------------------------------
 
         fp = fopen(reqfile, "r");
 
@@ -112,8 +136,10 @@ int main() {
             fclose(fp);
 
             printf("File sent successfully\n");
-
         }
+        // -------- end -------------------------------------------------------------
+
+    
 
         close(csock);
 

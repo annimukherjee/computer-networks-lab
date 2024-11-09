@@ -37,12 +37,15 @@ int main() {
 	// ------------ socket created ----------------------------
 
 
+
+
+
+	// Creating a bind ---------------------------------------
+
 	struct sockaddr_in send_msg;
 	send_msg.sin_family = AF_INET;
 	send_msg.sin_port = htons(7000);     
 	inet_aton("127.0.0.1", &send_msg.sin_addr);
-
-
 	
 	int server_bind_fd = bind(sock_server_connection_fd,     
 							(const struct sockaddr *)&send_msg, 
@@ -57,6 +60,8 @@ int main() {
 	else
 		printf("Bind created successfully\n");
 	printf("\n");
+	// ------------ bind created ----------------------------
+
 
 
 	// -----------------------------------------------------------------------------------------
@@ -64,14 +69,6 @@ int main() {
 	int listen_fd = listen(sock_server_connection_fd, 
 							5);
 	// -------------------------------------------------------------
-
-
-	// doing accept, to process the `connect()` sent by the client ----------------------------
-
-	
-	
-	// ---------------------------------------------------------------------------------------
-
 
 
 	while(1) {
@@ -94,9 +91,6 @@ int main() {
 
 		for (int i = 0; i < 2; i++)
 		{
-			
-		
-		
 			// //NEW SENDING CODE!!!!!!!!!!!!!!
 			printf("Who do u want to send msg to?\nClient0\t[Enter 0] or Client1\t[Enter 1]?\n");
 			int choice;

@@ -10,6 +10,8 @@
 
 int main()
 {
+
+    // Created a socket -------------------------------------------
     int server_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (server_socket == -1)
     {
@@ -17,11 +19,15 @@ int main()
         return 1;
     }
     printf("Socket created %d\n", server_socket);
+    // ------------------------------------------------------------
 
+
+    // binding server's socket -----------------------------------------------------------------------------
     struct sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(5678);
-    server_addr.sin_addr.s_addr = INADDR_ANY;
+    // server_addr.sin_addr.s_addr = INADDR_ANY;
+    inet_aton("127.0.0.1", &server_addr.sin_addr);
 
     int bind_ret = bind(server_socket, (const struct sockaddr *)&server_addr, sizeof(server_addr));
     if (bind_ret == -1)
@@ -30,6 +36,10 @@ int main()
         return 1;
     }
     printf("Bind successful %d\n", bind_ret);
+    // -----------------------------------------------------------------------------------------------------
+
+
+    // call listen ----------------------------------------------------------------------------------------
 
     int listen_ret = listen(server_socket, MAX_CLIENTS);
     if (listen_ret == -1)
@@ -38,6 +48,8 @@ int main()
         return 1;
     }
     printf("Server listening on port 5678\n");
+    // ------------------------------------------------------------------------------------------------------
+
 
     int client_sockets[MAX_CLIENTS];
     struct sockaddr_in client_addrs[MAX_CLIENTS];
@@ -66,37 +78,38 @@ int main()
             
             pid = fork();
             
-            if (pid == 0)
+           if (pid == 0)
             { // Child process
-                close(server_socket); // 
-                
-                while (strcmp(recv_buff, "bye"))
-                {
+                close(server_socket); // Close listening socket in child process
 
+                // Loop until "bye" message is received
+                while (strcmp(recv_buff, "bye") != 0)
+                {
                     int recv_ret = recv(client_sockets[client_index], recv_buff, sizeof(recv_buff) - 1, 0);
                     if (recv_ret == -1)
                     {
                         printf("Receive not successful\n");
-                        close(client_sockets[client_index]);
-                        return -1;
+                        break; // Break the loop on receive error
                     }
-                    recv_buff[recv_ret] = '\0';
+                    recv_buff[recv_ret] = '\0'; // Null-terminate the string
                     printf("Message from client %d: %s\n", client_index, recv_buff);
 
+                    // Respond to the client
                     char send_buff[100];
                     snprintf(send_buff, sizeof(send_buff), "Hello from server to client %d", client_index);
                     int send_ret = send(client_sockets[client_index], send_buff, strlen(send_buff), 0);
                     if (send_ret == -1)
                     {
                         printf("Send not successful\n");
-                        close(client_sockets[client_index]);
-                        return -1;
+                        break; // Break the loop on send error
                     }
                     printf("Message sent to client %d\n", client_index);
 
-                    close(client_sockets[client_index]);
-                    return 0; // Exit child process
-                }
+                } 
+
+                // Clean up and exit after finishing the conversation
+                close(client_sockets[client_index]);
+                return 0; // Exit child process
             }
             else if (pid > 0)
             {

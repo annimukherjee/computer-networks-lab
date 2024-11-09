@@ -6,7 +6,8 @@
 #include <arpa/inet.h>
 
 int main()
-{
+{   
+    // create socket ----------------------------------------------------
     int ret = socket(AF_INET, SOCK_STREAM, 0);
     if (ret == -1)
     {
@@ -14,7 +15,10 @@ int main()
         return 1;
     }
     printf("Socket created %d\n", ret);
+    // -------------------------------------------------------------------
 
+
+    // ------ send connect() to server ----------------------------------------------------
     struct sockaddr_in server;
     server.sin_family = AF_INET;
     server.sin_port = htons(5678);
@@ -27,6 +31,7 @@ int main()
         return -1;
     }
     printf("Connected to server\n");
+    // -------------------------------------------------------------------------------------
 
     struct sockaddr_in l_addr;
     socklen_t addr_len = sizeof(l_addr);
@@ -40,7 +45,7 @@ int main()
         /////////////
         char send_buff[100];
         printf("Enter your message: ");
-        scanf("%s", send_buff);
+        fgets(send_buff, sizeof(send_buff), stdin);
 
         int s = send(ret, send_buff, strlen(send_buff), 0);
         if (s == -1)
@@ -48,6 +53,8 @@ int main()
             printf("Send not successful\n");
             return -1;
         }
+        
+        
         char recv_buff[100];
         int r = recv(ret, recv_buff, sizeof(recv_buff) - 1, 0);
         if (r == -1)
@@ -59,6 +66,6 @@ int main()
         printf("Message from server: %s\n", recv_buff);
     }
 
-    // close(ret);
+
     return 0;
 }
